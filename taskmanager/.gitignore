@@ -1,0 +1,100 @@
+###=== Maven ===###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+###=== IDE ===###
+.idea/
+.mvn
+*.iml
+*.iws
+*.ipr
+*.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+bin/
+*.swp
+*.swo
+*~
+
+###=== Logs ===###
+*.log
+logs/
+**/*.log
+
+###=== OS ===###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+###=== Environment Configs ===###
+**/application-*.properties
+**/application-*.yml
+**/application-*.yaml
+!src/main/resources/application.properties
+!src/test/resources/application-test.properties
+
+###=== Databases ===###
+*.db
+*.mv.db
+*.trace.db
+.h2/
+*.h2.db
+*.sqlite
+*.sqlite3
+
+###=== Temp Files ===###
+tmp/
+temp/
+*.tmp
+*.bak
+*.sync
+*.orig
+*.rej
+
+###=== Build Reports ===###
+**/test-output/
+**/reports/
+**/site/
+**/jacoco/
+**/coverage/
+**/dependency-reduced-pom.xml
+
+###=== Executables ===###
+*.exe
+*.dll
+*.so
+*.dylib
+
+###=== IDE specific ===###
+.vscode/
+.vs/
+nbproject/
+nb-configuration.xml
+*.njsproj
+*.sln
+*.suo
+*.user
+*.userprefs
+
+###=== Maven Wrapper (keep these) ===###
+!.mvn/
+!mvnw
+!mvnw.cmd
+
+###=== Application specific ===###
+/uploads/
+/static/files/
+/config/local/
