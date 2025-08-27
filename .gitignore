@@ -1,0 +1,60 @@
+###=== Maven Specific ===###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+###=== IDE ===###
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+bin/
+
+###=== Logs ===###
+*.log
+logs/
+
+###=== OS ===###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+###=== Environment Configs (ВАЖНО!) ===###
+**/application-*.properties
+**/application-*.yml
+!src/main/resources/application.properties
+!src/test/resources/application-test.properties
+
+###=== Databases ===###
+*.db
+*.mv.db
+*.trace.db
+.h2/
+
+###=== Temp Files ===###
+tmp/
+temp/
+*.tmp
+*.bak
+*.sync
+
+###=== Build Reports ===###
+**/test-output/
+**/reports/
+**/site/
+**/jacoco/
+**/coverage/
