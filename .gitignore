@@ -1,30 +1,45 @@
-###=== Maven Specific ===###
+# Compiled class files
+*.class
 target/
+
+# Log files
+*.log
+logs/
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
-.mvn/wrapper/maven-wrapper.jar
-!.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/tmp/
 
-###=== IDE ===###
+# IDE files
 .idea/
 *.iml
 *.iws
 *.ipr
-.classpath
-.project
-.settings/
-.springBeans
-.sts4-cache/
-bin/
+.vscode/
+*.swp
+*.swo
 
-###=== Logs ===###
-*.log
-logs/
-
-###=== OS ===###
+# System files
 .DS_Store
 .DS_Store?
 ._*
@@ -33,28 +48,18 @@ logs/
 ehthumbs.db
 Thumbs.db
 
-###=== Environment Configs (ВАЖНО!) ===###
-**/application-*.properties
-**/application-*.yml
-!src/main/resources/application.properties
-!src/test/resources/application-test.properties
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.properties
 
-###=== Databases ===###
-*.db
-*.mv.db
-*.trace.db
-.h2/
+# Environment variables
+.env
+.env.local
+.env.production
 
-###=== Temp Files ===###
-tmp/
-temp/
-*.tmp
-*.bak
-*.sync
+# Build outputs
+build/
+dist/
+out/
 
-###=== Build Reports ===###
-**/test-output/
-**/reports/
-**/site/
-**/jacoco/
-**/coverage/
+# Unit test reports
+TEST*.xml
