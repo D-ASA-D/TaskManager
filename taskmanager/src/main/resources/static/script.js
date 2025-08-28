@@ -243,98 +243,68 @@ function showMessage(containerId, message, type) {
 }
 
 function startNotificationChecker() {
-    notificationCheckInterval = setInterval(checkForEvents, 10000);
-    checkForEvents();
+    notificationCheckInterval = setInterval(checkForNotifications, 10000);
+    checkForNotifications();
 }
 
 function stopNotificationChecker() {
     clearInterval(notificationCheckInterval);
 }
 
-async function checkForEvents() {
+async function checkForNotifications() {
     if (!currentUser) return;
 
     try {
-        const now = new Date();
-        const fiveMinutesFromNow = new Date(now.getTime() + 5 * 60000);
+        const response = await fetch(`${API_BASE}/notifications/user/${currentUser.id}`);
+        if (!response.ok) return;
 
-        const response = await fetch(`${API_BASE}/events/user/${currentUser.id}`);
-        const events = await response.json();
+        const notifications = await response.json();
 
-        events.forEach(event => {
-            const eventTime = new Date(event.eventTime);
-            const eventKey = `event-${event.id}`;
+        notifications.forEach(notification => {
+            const notificationKey = `event-${notification.eventId}-${notification.type}`;
 
-            if (shownNotifications.has(eventKey)) return;
-
-            if (eventTime > now && eventTime <= fiveMinutesFromNow) {
-                showSiteNotification({
-                    type: 'info',
-                    title: '🔔 Скоро событие',
-                    message: `${event.title} начнется через 5 минут`,
-                    event: event
-                });
-                shownNotifications.add(eventKey);
-            }
-
-            const oneMinuteBefore = new Date(eventTime.getTime() - 60000);
-            const oneMinuteAfter = new Date(eventTime.getTime() + 60000);
-
-            if (now >= oneMinuteBefore && now <= oneMinuteAfter) {
-                showSiteNotification({
-                    type: 'urgent',
-                    title: '⏰ Событие началось!',
-                    message: `${event.title} начинается сейчас`,
-                    event: event
-                });
-                shownNotifications.add(eventKey);
-            }
-
-            const tenMinutesAgo = new Date(now.getTime() - 10 * 60000);
-            if (eventTime < tenMinutesAgo && !shownNotifications.has(eventKey + '-expired')) {
-                showSiteNotification({
-                    type: 'urgent',
-                    title: '⚠️ Событие просрочено',
-                    message: `${event.title} должно было начаться ${formatDateTime(event.eventTime)}`,
-                    event: event
-                });
-                shownNotifications.add(eventKey + '-expired');
+            if (!shownNotifications.has(notificationKey)) {
+                showSiteNotification(notification);
+                shownNotifications.add(notificationKey);
             }
         });
-
     } catch (error) {
-        console.log('Ошибка проверки уведомлений:', error);
+        console.log('Ошибка получения уведомлений:', error);
     }
 }
 
-function showSiteNotification({ type = 'info', title, message, event = null }) {
+function showSiteNotification(notification) {
     const container = document.getElementById('notifications-container');
     const notificationId = 'notification-' + Date.now();
 
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.id = notificationId;
+    const notificationElement = document.createElement('div');
+    notificationElement.className = `notification notification-${notification.type.toLowerCase()}`;
+    notificationElement.id = notificationId;
 
-    let icon = '📋';
-    if (type === 'urgent') icon = '⏰';
-    if (type === 'success') icon = '✅';
-    if (type === 'info') icon = '🔔';
-
-    notification.innerHTML = `
-        <div class="notification-icon">${icon}</div>
+    notificationElement.innerHTML = `
+        <div class="notification-icon">${getNotificationIcon(notification.type)}</div>
         <div class="notification-content">
-            <div class="notification-title">${title}</div>
-            <div class="notification-message">${message}</div>
-            ${event ? `<div class="notification-time">${formatDateTime(event.eventTime)}</div>` : ''}
+            <div class="notification-title">${notification.title}</div>
+            <div class="notification-message">${notification.message}</div>
+            <div class="notification-time">${formatDateTime(notification.eventTime)}</div>
         </div>
         <button class="notification-close" onclick="removeNotification('${notificationId}')">×</button>
     `;
 
-    container.appendChild(notification);
+    container.appendChild(notificationElement);
 
     setTimeout(() => {
         removeNotification(notificationId);
     }, 10000);
+}
+
+function getNotificationIcon(type) {
+    const icons = {
+        'FIVE_MINUTES_BEFORE': '🔔',
+        'EVENT_STARTED': '⏰',
+        'EVENT_EXPIRED': '⚠️'
+    };
+    return icons[type] || '📋';
 }
 
 function removeNotification(notificationId) {
